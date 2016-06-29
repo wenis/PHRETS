@@ -41,7 +41,7 @@ class Capabilities
         return (array_key_exists($name, $this->capabilities)) ? $this->capabilities[$name] : null;
     }
     
-    public function getAll()
+    public function all()
     {
         return $this->capabilities;
     }
