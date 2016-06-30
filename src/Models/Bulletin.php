@@ -89,6 +89,14 @@ class Bulletin
     }
 
     /**
+     * @return array 
+    */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
