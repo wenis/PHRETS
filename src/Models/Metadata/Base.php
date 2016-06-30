@@ -27,6 +27,15 @@ abstract class Base implements \ArrayAccess
     }
 
     /**
+     * Return all values
+     * @return $this
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
      * @param $name
      * @param array $args
      * @return $this|mixed|null
