@@ -2,8 +2,10 @@
 
 class Record implements \ArrayAccess
 {
-    /** @var Results */
-    protected $parent = null;
+    protected $resource;
+    protected $class;
+    protected $fields = [];
+    protected $restricted_value = '****';
     protected $values = [];
 
     /**
@@ -25,13 +27,21 @@ class Record implements \ArrayAccess
     }
 
     /**
+    * @param $field
+    */
+    public function remove($field)
+    {
+      unset($this->values[(string)$field]);
+    }
+
+    /**
      * @param $field
      * @return bool
      */
     public function isRestricted($field)
     {
         $val = $this->get($field);
-        return ($val == $this->parent->getRestrictedIndicator());
+        return ($val == $this->restricted_value);
     }
 
     /**
@@ -40,7 +50,10 @@ class Record implements \ArrayAccess
      */
     public function setParent(Results $results)
     {
-        $this->parent = $results;
+        $this->resource = $results->getResource();
+        $this->class = $results->getClass();
+        $this->restricted_value = $results->getRestrictedIndicator();
+        $this->fields = $results->getHeaders();
         return $this;
     }
 
@@ -49,7 +62,7 @@ class Record implements \ArrayAccess
      */
     public function getResource()
     {
-        return $this->parent->getResource();
+        return $this->resource;
     }
 
     /**
@@ -57,7 +70,7 @@ class Record implements \ArrayAccess
      */
     public function getClass()
     {
-        return $this->parent->getClass();
+        return $this->class;
     }
 
     /**
@@ -65,7 +78,7 @@ class Record implements \ArrayAccess
      */
     public function getFields()
     {
-        return $this->parent->getHeaders();
+        return $this->fields;
     }
 
     /**

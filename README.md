@@ -19,9 +19,6 @@ date_default_timezone_set('America/New_York');
 
 require_once("vendor/autoload.php");
 
-$log = new \Monolog\Logger('PHRETS');
-$log->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout', \Monolog\Logger::DEBUG));
-
 $config = new \PHRETS\Configuration;
 $config->setLoginUrl('rets login url here')
         ->setUsername('rets username here')
@@ -29,7 +26,13 @@ $config->setLoginUrl('rets login url here')
         ->setRetsVersion('1.7.2');
 
 $rets = new \PHRETS\Session($config);
-$rets->setLogger($log);
+
+// If you're using Monolog already for logging, you can pass that logging instance to PHRETS for some additional
+// insight into what PHRETS is doing.
+//
+// $log = new \Monolog\Logger('PHRETS');
+// $log->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout', \Monolog\Logger::DEBUG));
+// $rets->setLogger($log);
 
 $connect = $rets->Login();
 
@@ -80,7 +83,7 @@ The easiest way to get started is using [Composer](http://getcomposer.org) to in
  
 
 ### Get Help
-The best place to ask for help is in our [Google Group](http://groups.google.com/group/phrets).  Please leave GitHub's issue tracker for bugs with the library.
+The best place to ask for help is either our [Slack channel](http://phrets.troda.com/) or in our [Google Group](http://groups.google.com/group/phrets).  Please leave GitHub's issue tracker for bugs with the library.
 
 ### Disclaimer  
 In many cases, the capabilities provided by this library are dependent on these features being properly implemented by the RETS server you're accessing.  The RETS specification defines how clients and servers communicate, and if a server is doing something unexpected, this library may not work without tweaking some options.
